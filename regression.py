@@ -1,3 +1,5 @@
+import pickel
+import os
 import numpy as np
 from PIL import Image
 
@@ -28,7 +30,6 @@ from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
-X_test2 = sc.transform(X_test2)
 
 #Model training
 from sklearn.linear_model import LogisticRegression
@@ -41,6 +42,18 @@ y_pred = classifier.predict(X_test)
 #create confusion matrix
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
+
+#calculate accuracy
+from sklearn.metrics import accuracy_score
+accuracy = accuracy_score(y_test,y_pred)
+print(accuracy)
+
+#save the model in pickel file
+pickel_file = 'LogRegPickel.pkl'
+logreg_pkl = open(pickel_file,'wb')
+pickel.dump(classifier, logreg_pkl)
+logreg_pkl.close()
+
 
 
 
